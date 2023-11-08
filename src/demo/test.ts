@@ -1,7 +1,8 @@
-import { CreateTypeScaleOptions } from 'src/types'
+import { TypeScaleOptions } from 'src/types'
 import { createTypeScale } from '../'
+import mdfyStyleDictionary from '../sdconfig'
 
-const options1: CreateTypeScaleOptions = {
+const options1: TypeScaleOptions = {
   base: 24,
   maxSize: 72,
   minSize: 16,
@@ -10,7 +11,7 @@ const options1: CreateTypeScaleOptions = {
   roundAfterBy: 8,
 }
 
-const options2: CreateTypeScaleOptions = {
+const options2: TypeScaleOptions = {
   base: 16,
   maxSize: 128,
   minSize: 10,
@@ -25,3 +26,4 @@ console.log('TypeScale Output:', createTypeScale(options1))
 console.log('\nTest 2:')
 console.log('TypeScale Options:', options2)
 console.log('TypeScale Output:', createTypeScale(options2))
+mdfyStyleDictionary.buildAllPlatforms()
