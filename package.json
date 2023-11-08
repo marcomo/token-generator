@@ -1,0 +1,16 @@
+{
+  "name": "token-generator",
+  "version": "0.1.0",
+  "description": "Node scripts for generating color and typography tokens from a set of primitive values.",
+  "main": "index.js",
+  "repository": "https://github.com/marcomo/token-generator.git",
+  "author": "Marco Morales <marco.bbcm@gmail.com>",
+  "license": "none",
+  "private": true,
+  "devDependencies": {
+    "classnames": "^2.3.2",
+    "style-dictionary": "^3.9.0",
+    "tinycolor2": "^1.6.0",
+    "typescript": "^5.2.2"
+  }
+}
