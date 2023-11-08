@@ -1,6 +1,6 @@
 {
   "name": "token-generator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Node scripts for generating color and typography tokens from a set of primitive values.",
   "main": "dist/index.js",
   "repository": "https://github.com/marcomo/token-generator.git",
@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "dist-clean": "rm -rf ./dist",
-    "compile": "yarn dist-clean && tsc"
+    "compile": "yarn dist-clean && tsc",
+    "demo": "yarn compile && node dist/demo/test.js"
   },
   "devDependencies": {
     "classnames": "^2.3.2",
