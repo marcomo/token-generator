@@ -1,0 +1,1 @@
+export { default as createTypeScale } from "./utils/createTypeScale"
