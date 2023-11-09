@@ -11,6 +11,9 @@ const mdfyStyleDictionary = StyleDictionary.extend({
         {
           destination: '_variables.scss',
           format: 'scss/variables',
+          options: {
+            outputReferences: true,
+          },
         },
       ],
       actions: ['logSCSS'],
