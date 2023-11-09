@@ -2,7 +2,7 @@ import fs from 'fs'
 import StyleDictionary from 'style-dictionary'
 
 const mdfyStyleDictionary = StyleDictionary.extend({
-  source: ['dist/tokens/**/*.js'],
+  source: ['dist/tokens/**/*.tokens.js'],
   platforms: {
     scss: {
       transformGroup: 'scss',

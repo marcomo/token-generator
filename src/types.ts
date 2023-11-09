@@ -9,7 +9,7 @@ export type TypeScaleOptions = {
   roundAfterBy?: number
 }
 
-type ColorScaler = (
+export type ColorModifier = (
   color: BaseColorsOptions['baseColor'],
   adjustment: number,
   levels: number[],
@@ -20,19 +20,16 @@ export type BaseColorsOptions = {
   baseColor: string
   baseColorLevel: number
   baseColorKey?: string
+  startLevel?: 100
   /**
    * adjustment can be a number for even adjustments
    * or an array of numbers for customized adjustments per color level
    */
   adjustment: number | number[]
   intervals: number
-  lightener?: ColorScaler
-  darkener?: ColorScaler
+  lightener?: ColorModifier
+  darkener?: ColorModifier
   tokens?: Mdfy.TokenDictionary
-}
-
-export type BaseColorsConfig = {
-  startLevel: 100
 }
 
 export type GetColorsOptions = Omit<BaseColorsOptions, 'intervals'> & {
