@@ -1,16 +1,12 @@
-import Color from 'tinycolor2'
 import { createColorProgressionTokens } from './helpers'
 
 export const color = {
   neutral: createColorProgressionTokens({
     baseColor: '#4b5055',
-    baseColorLevel: 700,
+    baseColorIndex: 6,
     baseColorKey: 'dark',
-    intervals: 7,
-    adjustment: [64, 56, 48, 24, 16, 8, 0],
-    lightener: (baseColor, adjustment) => {
-      return Color(baseColor).lighten(adjustment).greyscale().toString()
-    },
+    levelsCount: 7,
+    lightdark: [64, 56, 48, 24, 16, 8, 0],
     tokens: {
       light: {
         value: '#ffffff',
