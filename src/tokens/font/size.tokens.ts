@@ -12,7 +12,6 @@ const config: TypeScaleOptions = {
 
 const typeScale = createTypeScale(config)
 
-console.log(typeScale)
 export const font = {
   size: {
     ...typeScale.reduce((tokens, size) => {
