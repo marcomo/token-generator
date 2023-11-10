@@ -1,5 +1,5 @@
-import { TypeScaleOptions } from 'src/types'
-import { createTypeScale } from '../'
+import { TypeScaleOptions } from '../types'
+import createTypeScale from '../utils/createTypeScale'
 import mdfyStyleDictionary from '../sdconfig'
 
 const options1: TypeScaleOptions = {
@@ -13,11 +13,11 @@ const options1: TypeScaleOptions = {
 
 const options2: TypeScaleOptions = {
   base: 16,
-  maxSize: 128,
-  minSize: 10,
-  factor: 1.25,
-  roundBeforeBy: 2,
-  roundAfterBy: 8,
+  factor: 1.125,
+  minSize: 12,
+  maxSize: 96,
+  roundBeforeBy: 4,
+  roundAfterBy: 4,
 }
 
 console.log('Test 1:')

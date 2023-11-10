@@ -3,7 +3,7 @@ import {
   ColorAdjustment,
   GetColorsOptions,
   Mdfy,
-} from 'src/types'
+} from '../../types'
 import { baseColorsDefaults } from './base'
 import Color from 'tinycolor2'
 
@@ -72,7 +72,7 @@ const generateColors: (options: GetColorsOptions) => Mdfy.TokenDictionary = (
       if (isBaseColor) {
         return {
           [key]: {
-            value: color.toString(),
+            value: color?.toString(),
           },
         }
       } else {
@@ -87,25 +87,33 @@ const generateColors: (options: GetColorsOptions) => Mdfy.TokenDictionary = (
          * The base color never gets transformed
          * */
         const lightness =
-          i < baseColorIndex ? getAdjustment(lightdark, ...args) : 0
+          lightdark && i < baseColorIndex
+            ? getAdjustment(lightdark, ...args)
+            : 0
         const darkness =
-          i > baseColorIndex ? getAdjustment(lightdark, ...args) : 0
+          lightdark && i > baseColorIndex
+            ? getAdjustment(lightdark, ...args)
+            : 0
 
         // All other transformations are applied to all colors (less the base color)
-        const saturation = getAdjustment(saturate, ...args)
-        const desaturation = getAdjustment(desaturate, ...args)
+        const saturation = saturate ? getAdjustment(saturate, ...args) : null
+        const desaturation = desaturate
+          ? getAdjustment(desaturate, ...args)
+          : null
         // Spin adjusts hue
-        const hueSpin = getAdjustment(spin, ...args)
+        const hueSpin = spin ? getAdjustment(spin, ...args) : null
 
         return {
           [key]: {
             value: color
-              .lighten(lightness)
-              .darken(darkness)
-              .spin(hueSpin)
-              .saturate(saturation)
-              .desaturate(greyscale ? 100 : desaturation)
-              .toString(),
+              ? color
+                  .lighten(lightness)
+                  .darken(darkness)
+                  .spin(hueSpin)
+                  .saturate(saturation)
+                  .desaturate(greyscale ? 100 : desaturation)
+                  .toString()
+              : null,
           },
         }
       }
