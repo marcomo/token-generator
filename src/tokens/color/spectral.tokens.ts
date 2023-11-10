@@ -1,4 +1,4 @@
-import { createColorProgressionTokens } from './helpers'
+import { createColorProgressionTokens } from '../../utils/createColorProgressionTokens'
 import { ColorModification, Mdfy } from '../../types'
 
 const attributes: ColorModification = {
