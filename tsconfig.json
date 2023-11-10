@@ -9,12 +9,14 @@
     "module": "nodenext",
     "pretty": true,
     "removeComments": true,
+    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
   "include": [
-    "src"
+    "src",
+    "index.tsx"
   ]
 }
