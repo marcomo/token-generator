@@ -10,9 +10,12 @@
   "scripts": {
     "dist-clean": "rm -rf ./dist",
     "compile": "yarn dist-clean && tsc",
-    "demo": "yarn compile && node dist/demo/test.js"
+    "presdbuild": "yarn compile",
+    "sdbuild": "node dist/sdconfig.js",
+    "demo": "yarn sdbuild && node dist/demo/test.js"
   },
   "devDependencies": {
+    "@types/node": "^20.9.0",
     "classnames": "^2.3.2",
     "style-dictionary": "^3.9.0",
     "tinycolor2": "^1.6.0",

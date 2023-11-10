@@ -1,15 +1,13 @@
-import { CreateTypeScaleOptions } from 'src/types'
+import { TypeScaleOptions } from 'src/types'
 
-const defaults: Partial<CreateTypeScaleOptions> = {
+const defaults: Partial<TypeScaleOptions> = {
   minSize: 10,
   maxSize: 64,
   roundBeforeBy: 4,
   roundAfterBy: 4,
 }
 
-const createTypeScale: (options: CreateTypeScaleOptions) => void = (
-  options
-) => {
+const createTypeScale: (options: TypeScaleOptions) => void = (options) => {
   const { base, factor, minSize, maxSize, roundBeforeBy, roundAfterBy } =
     Object.assign({}, defaults, options)
   let sizesBeforeBase: number[] = []
