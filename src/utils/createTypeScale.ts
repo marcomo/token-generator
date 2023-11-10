@@ -1,13 +1,15 @@
-import { TypeScaleOptions } from 'src/types'
+import { TypeScaleOptions } from '../types'
 
-const defaults: Partial<TypeScaleOptions> = {
+const defaults: TypeScaleOptions = {
+  base: 16,
+  factor: 1.25,
   minSize: 10,
   maxSize: 64,
   roundBeforeBy: 4,
   roundAfterBy: 4,
 }
 
-const createTypeScale: (options: TypeScaleOptions) => void = (options) => {
+const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
   const { base, factor, minSize, maxSize, roundBeforeBy, roundAfterBy } =
     Object.assign({}, defaults, options)
   let sizesBeforeBase: number[] = []
@@ -21,23 +23,27 @@ const createTypeScale: (options: TypeScaleOptions) => void = (options) => {
     return sizesAfterBase[sizesAfterBase.length - 1]
   }
 
-  while (getFirst() === undefined || getFirst() >= minSize) {
+  while (getFirst() === undefined || (minSize && getFirst() >= minSize)) {
     sizesBeforeBase.unshift(Number(((getFirst() || base) / factor).toFixed(2)))
   }
 
   // Round the before numbers by the before digit
-  sizesBeforeBase = sizesBeforeBase.map(
-    (n) => Math.round(n / roundBeforeBy) * roundBeforeBy
-  )
+  if (roundBeforeBy) {
+    sizesBeforeBase = sizesBeforeBase.map(
+      (n) => Math.round(n / roundBeforeBy) * roundBeforeBy
+    )
+  }
 
-  while (getLast() === undefined || getLast() <= maxSize) {
+  while (getLast() === undefined || (maxSize && getLast() <= maxSize)) {
     sizesAfterBase.push(Number(((getLast() || base) * factor).toFixed(2)))
   }
 
   // Round the after numbers by the after digit
-  sizesAfterBase = sizesAfterBase.map(
-    (n) => Math.round(n / roundAfterBy) * roundAfterBy
-  )
+  if (roundAfterBy) {
+    sizesAfterBase = sizesAfterBase.map(
+      (n) => Math.round(n / roundAfterBy) * roundAfterBy
+    )
+  }
 
   /**
    * Spread all numbers into a single array
@@ -46,7 +52,13 @@ const createTypeScale: (options: TypeScaleOptions) => void = (options) => {
    */
   return [...sizesBeforeBase, base, ...sizesAfterBase].filter(
     (num, index, array) => {
-      return num >= minSize && num <= maxSize && array.indexOf(num) === index
+      return (
+        minSize &&
+        maxSize &&
+        num >= minSize &&
+        num <= maxSize &&
+        array.indexOf(num) === index
+      )
     }
   )
 }

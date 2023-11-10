@@ -1,5 +1,5 @@
 import { createColorProgressionTokens } from './helpers'
-import { ColorModification, Mdfy } from 'src/types'
+import { ColorModification, Mdfy } from '../../types'
 
 const attributes: ColorModification = {
   lighten: { adjustment: 8, saturation: 12 },
