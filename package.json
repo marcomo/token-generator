@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "dist-clean": "rm -rf ./dist",
-    "compile": "yarn dist-clean && tsc",
+    "compile": "yarn dist-clean && tsc -p tsconfig.node.json",
     "presdbuild": "yarn compile",
     "sdbuild": "node dist/sdconfig.js",
     "demo": "yarn sdbuild && node dist/demo/test.js",
