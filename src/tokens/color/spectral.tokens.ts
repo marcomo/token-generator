@@ -1,14 +1,13 @@
 import { createColorProgressionTokens } from '../../utils/createColorProgressionTokens'
-import { ColorModification, Mdfy } from '../../types/Color'
+import { ColorModification } from '../../types/Color'
+import { TokenDictionary } from 'src/types/TokenGenerator'
 
 const attributes: ColorModification = {
   lighten: { adjustment: 8, saturation: 12 },
   darken: { adjustment: 8, saturation: 12 },
 }
 
-export const color: Mdfy.TokenDictionary<
-  Mdfy.TokenDictionary<Mdfy.TokenDictionary>
-> = {
+export const color: TokenDictionary<TokenDictionary<TokenDictionary>> = {
   spectral: {
     red: createColorProgressionTokens({
       baseColor: '#C63454',

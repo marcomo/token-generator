@@ -2,8 +2,8 @@ import {
   BaseColorsOptions,
   ColorAdjustment,
   GetColorsOptions,
-  Mdfy,
 } from '../types/Color'
+import { TokenDictionary } from '../types/TokenGenerator'
 import Color from 'tinycolor2'
 
 const baseColorsDefaults: Required<BaseColorsOptions> = {
@@ -34,7 +34,7 @@ export const getAdjustment = (
     : adjustment * Math.abs(index - options.baseColorIndex) || 0
 }
 
-export const merge = (a: Mdfy.TokenDictionary, b: Mdfy.TokenDictionary) => ({
+export const merge = (a: TokenDictionary, b: TokenDictionary) => ({
   ...a,
   ...b,
 })
@@ -59,7 +59,7 @@ export const splitLevels = (levels: number[], baseLevel) => {
   ]
 }
 
-const generateColors: (options: GetColorsOptions) => Mdfy.TokenDictionary = (
+const generateColors: (options: GetColorsOptions) => TokenDictionary = (
   options
 ) => {
   const {
@@ -137,7 +137,7 @@ const generateColors: (options: GetColorsOptions) => Mdfy.TokenDictionary = (
 
 export const createColorProgressionTokens: (
   options: BaseColorsOptions
-) => Mdfy.TokenDictionary = (options) => {
+) => TokenDictionary = (options) => {
   const { startLevel, levelsCount, levelGap, tokens } = Object.assign(
     {},
     baseColorsDefaults,
