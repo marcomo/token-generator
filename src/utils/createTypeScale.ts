@@ -1,17 +1,23 @@
-import { TypeScaleOptions } from '../types'
+import { TypeScaleOptions } from 'src/types/Typescale'
 
 const defaults: TypeScaleOptions = {
-  base: 16,
+  baseSize: 16,
   factor: 1.25,
   minSize: 10,
   maxSize: 64,
-  roundBeforeBy: 4,
-  roundAfterBy: 4,
+  roundBeforeInterval: 4,
+  roundAfterInterval: 4,
 }
 
 const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
-  const { base, factor, minSize, maxSize, roundBeforeBy, roundAfterBy } =
-    Object.assign({}, defaults, options)
+  const {
+    baseSize,
+    factor,
+    minSize,
+    maxSize,
+    roundBeforeInterval,
+    roundAfterInterval,
+  } = Object.assign({}, defaults, options)
   let sizesBeforeBase: number[] = []
   let sizesAfterBase: number[] = []
 
@@ -24,24 +30,26 @@ const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
   }
 
   while (getFirst() === undefined || (minSize && getFirst() >= minSize)) {
-    sizesBeforeBase.unshift(Number(((getFirst() || base) / factor).toFixed(2)))
+    sizesBeforeBase.unshift(
+      Number(((getFirst() || baseSize) / factor).toFixed(2))
+    )
   }
 
   // Round the before numbers by the before digit
-  if (roundBeforeBy) {
+  if (roundBeforeInterval) {
     sizesBeforeBase = sizesBeforeBase.map(
-      (n) => Math.round(n / roundBeforeBy) * roundBeforeBy
+      (n) => Math.round(n / roundBeforeInterval) * roundBeforeInterval
     )
   }
 
   while (getLast() === undefined || (maxSize && getLast() <= maxSize)) {
-    sizesAfterBase.push(Number(((getLast() || base) * factor).toFixed(2)))
+    sizesAfterBase.push(Number(((getLast() || baseSize) * factor).toFixed(2)))
   }
 
   // Round the after numbers by the after digit
-  if (roundAfterBy) {
+  if (roundAfterInterval) {
     sizesAfterBase = sizesAfterBase.map(
-      (n) => Math.round(n / roundAfterBy) * roundAfterBy
+      (n) => Math.round(n / roundAfterInterval) * roundAfterInterval
     )
   }
 
@@ -50,7 +58,7 @@ const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
    * Filter numbers outside the min and max sizes
    * Filter only unique numbers
    */
-  return [...sizesBeforeBase, base, ...sizesAfterBase].filter(
+  return [...sizesBeforeBase, baseSize, ...sizesAfterBase].filter(
     (num, index, array) => {
       return (
         minSize &&

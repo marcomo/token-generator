@@ -7,7 +7,7 @@ const Context = createContext<TypescaleContext>({} as TypescaleContext)
 export const TypescaleProvider: React.FunctionComponent<PropsWithChildren> = (
   props
 ) => {
-  const [size, setSize] = useControllableState({ defaultValue: 16 })
+  const [baseSize, setBaseSize] = useControllableState({ defaultValue: 16 })
   const [factor, setFactor] = useControllableState({ defaultValue: 1.125 })
   const [minSize, setMinSize] = useControllableState({ defaultValue: 12 })
   const [maxSize, setMaxSize] = useControllableState({ defaultValue: 96 })
@@ -20,8 +20,8 @@ export const TypescaleProvider: React.FunctionComponent<PropsWithChildren> = (
   return (
     <Context.Provider
       value={{
-        size,
-        setSize,
+        baseSize,
+        setBaseSize,
         factor,
         setFactor,
         minSize,

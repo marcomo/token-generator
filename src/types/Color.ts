@@ -1,14 +1,5 @@
 import { DesignToken } from 'style-dictionary'
 
-export type TypeScaleOptions = {
-  base: number
-  factor: number
-  minSize?: number
-  maxSize?: number
-  roundBeforeBy?: number
-  roundAfterBy?: number
-}
-
 export type ColorModAttributes = {
   adjustment?: number
   saturation?: number

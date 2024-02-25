@@ -1,15 +1,15 @@
-import { TypeScaleOptions } from '../../src/types.js'
+import { TypeScaleOptions } from 'src/types/Typescale.js'
 import createTypescale from '../utils/createTypeScale.js'
 import mdfyStyleDictionary from '../sdconfig'
 
 export const typescaleDemo1 = () => {
   const options1: TypeScaleOptions = {
-    base: 24,
+    baseSize: 24,
     maxSize: 72,
     minSize: 16,
     factor: 1.125,
-    roundBeforeBy: 4,
-    roundAfterBy: 8,
+    roundBeforeInterval: 4,
+    roundAfterInterval: 8,
   }
   console.log('Test 1:')
   console.log('TypeScale Options:', options1)
@@ -18,12 +18,12 @@ export const typescaleDemo1 = () => {
 
 export const typescaleDemo2 = () => {
   const options2: TypeScaleOptions = {
-    base: 16,
+    baseSize: 16,
     factor: 1.125,
     minSize: 12,
     maxSize: 96,
-    roundBeforeBy: 4,
-    roundAfterBy: 4,
+    roundBeforeInterval: 4,
+    roundAfterInterval: 4,
   }
   console.log('\nTest 2:')
   console.log('TypeScale Options:', options2)

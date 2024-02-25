@@ -3,7 +3,7 @@ import {
   ColorAdjustment,
   GetColorsOptions,
   Mdfy,
-} from '../types'
+} from '../types/Color'
 import Color from 'tinycolor2'
 
 const baseColorsDefaults: Required<BaseColorsOptions> = {

@@ -1,13 +1,13 @@
-import { TypeScaleOptions } from '../../types'
+import { TypeScaleOptions } from '../../types/Typescale'
 import createTypeScale from '../../utils/createTypeScale'
 
 const config: TypeScaleOptions = {
-  base: 16,
+  baseSize: 16,
   factor: 1.125,
   minSize: 12,
   maxSize: 96,
-  roundBeforeBy: 4,
-  roundAfterBy: 4,
+  roundBeforeInterval: 4,
+  roundAfterInterval: 4,
 }
 
 const typeScale = createTypeScale(config)
@@ -18,7 +18,7 @@ export const font = {
       return {
         ...tokens,
         [size]: {
-          value: `${size / config.base}rem`,
+          value: `${size / config.baseSize}rem`,
         },
       }
     }, {}),

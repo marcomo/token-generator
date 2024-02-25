@@ -5,8 +5,8 @@ import Heading from '../Heading.js'
 
 const TypescaleConfig = () => {
   const {
-    size,
-    setSize,
+    baseSize,
+    setBaseSize,
     factor,
     setFactor,
     minSize,
@@ -24,8 +24,8 @@ const TypescaleConfig = () => {
       <NumberStepper
         label='Base Size'
         helperText='The font size used as the base for the typescale calculations.'
-        initValue={size}
-        onChange={(value: number) => setSize(value)}
+        initValue={baseSize}
+        onChange={(value: number) => setBaseSize(value)}
         min={1}
         max={256} // TODO: Allow user to control
       />
