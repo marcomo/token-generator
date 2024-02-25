@@ -14,7 +14,15 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": [
+      "vite/client"
+    ],
+    "paths": {
+      "src/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src"

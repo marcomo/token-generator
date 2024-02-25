@@ -8,6 +8,9 @@ import {
   Heading,
   ChakraTheme,
 } from '@chakra-ui/react'
+import FontStyles from './FontStyles.js'
+import Typescale from './Typescale/Typescale.js'
+import { FontsProvider } from 'src/context/FontsContext.js'
 
 const customTheme: Partial<ChakraTheme> = {
   components: {
@@ -35,14 +38,17 @@ const theme = extendTheme(customTheme)
 const App: React.FunctionComponent = () => {
   return (
     <ChakraBaseProvider theme={theme}>
-      <Container maxWidth={1600} p='64px'>
-        This is a Container
-        <Box m={2} p={2}>
-          This is a box
-          <Heading as='h1'>Token Generator</Heading>
-          <Card p={4}>This is a card</Card>
-        </Box>
-      </Container>
+      <FontsProvider>
+        <FontStyles />
+        <Container maxWidth={1600} p='64px'>
+          <Box m={2} p={2}>
+            <Heading as='h1' my={2}>
+              Token Generator
+            </Heading>
+            <Typescale />
+          </Box>
+        </Container>
+      </FontsProvider>
     </ChakraBaseProvider>
   )
 }
