@@ -1,11 +1,5 @@
 import { createColorProgressionTokens } from '../../utils/createColorProgressionTokens'
-import { ColorModification } from '../../types/Color'
 import { TokenDictionary } from 'src/types/TokenGenerator'
-
-const attributes: ColorModification = {
-  lighten: { adjustment: 8, saturation: 12 },
-  darken: { adjustment: 8, saturation: 12 },
-}
 
 export const color: TokenDictionary<TokenDictionary<TokenDictionary>> = {
   spectral: {
