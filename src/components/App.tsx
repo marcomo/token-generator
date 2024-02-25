@@ -5,12 +5,12 @@ import {
   Card,
   Box,
   Container,
-  Heading,
   ChakraTheme,
 } from '@chakra-ui/react'
 import FontStyles from './FontStyles.js'
 import Typescale from './Typescale/Typescale.js'
 import { FontsProvider } from 'src/context/FontsContext.js'
+import Heading from './Heading.js'
 
 const customTheme: Partial<ChakraTheme> = {
   components: {
