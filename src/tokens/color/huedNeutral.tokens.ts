@@ -1,4 +1,4 @@
-import { createColorProgressionTokens } from './helpers'
+import { createColorProgressionTokens } from '../../utils/createColorProgressionTokens'
 
 export const color = {
   huedNeutrals: createColorProgressionTokens({

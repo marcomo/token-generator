@@ -9,10 +9,13 @@
   "private": true,
   "scripts": {
     "dist-clean": "rm -rf ./dist",
-    "compile": "yarn dist-clean && tsc",
+    "compile": "yarn dist-clean && tsc -p tsconfig.node.json",
     "presdbuild": "yarn compile",
     "sdbuild": "node dist/sdconfig.js",
-    "demo": "yarn sdbuild && node dist/demo/test.js"
+    "demo": "yarn sdbuild && node dist/demo/test.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
@@ -20,5 +23,18 @@
     "style-dictionary": "^3.9.0",
     "tinycolor2": "^1.6.0",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@vitejs/plugin-react": "^4.1.1",
+    "framer-motion": "^10.16.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite": "^4.5.0"
   }
 }

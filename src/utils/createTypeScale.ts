@@ -1,17 +1,23 @@
-import { TypeScaleOptions } from '../types'
+import { TypeScaleOptions } from 'src/types/Typescale'
 
 const defaults: TypeScaleOptions = {
-  base: 16,
+  baseSize: 16,
   factor: 1.25,
   minSize: 10,
   maxSize: 64,
-  roundBeforeBy: 4,
-  roundAfterBy: 4,
+  roundBeforeInterval: 4,
+  roundAfterInterval: 4,
 }
 
 const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
-  const { base, factor, minSize, maxSize, roundBeforeBy, roundAfterBy } =
-    Object.assign({}, defaults, options)
+  const {
+    baseSize,
+    factor,
+    minSize,
+    maxSize,
+    roundBeforeInterval,
+    roundAfterInterval,
+  } = Object.assign({}, defaults, options)
   let sizesBeforeBase: number[] = []
   let sizesAfterBase: number[] = []
 
@@ -23,25 +29,48 @@ const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
     return sizesAfterBase[sizesAfterBase.length - 1]
   }
 
-  while (getFirst() === undefined || (minSize && getFirst() >= minSize)) {
-    sizesBeforeBase.unshift(Number(((getFirst() || base) / factor).toFixed(2)))
+  // factor should always be greater than 1.
+  // This will run while we don't have any sizes or
+  // until we reach the minSize
+  while (
+    (factor > 1 && getFirst() === undefined) ||
+    (minSize && getFirst() >= minSize)
+  ) {
+    const first = getFirst()
+    const next = Number(((first || baseSize) / factor).toFixed(2))
+    // skip repeats, shouldn't happen
+    if (next === first) {
+      break
+    }
+    sizesBeforeBase.unshift(next)
   }
 
   // Round the before numbers by the before digit
-  if (roundBeforeBy) {
+  if (roundBeforeInterval) {
     sizesBeforeBase = sizesBeforeBase.map(
-      (n) => Math.round(n / roundBeforeBy) * roundBeforeBy
+      (n) => Math.round(n / roundBeforeInterval) * roundBeforeInterval
     )
   }
-
-  while (getLast() === undefined || (maxSize && getLast() <= maxSize)) {
-    sizesAfterBase.push(Number(((getLast() || base) * factor).toFixed(2)))
+  // factor should always be greater than 1.
+  // This will run while we don't have any sizes or
+  // until we reach the maxSize
+  while (
+    (factor > 1 && getLast() === undefined) ||
+    (maxSize && getLast() <= maxSize)
+  ) {
+    const last = getLast()
+    const next = Number(((last || baseSize) * factor).toFixed(2))
+    // skip repeats, shouldn't happen
+    if (next === last) {
+      break
+    }
+    sizesAfterBase.push(next)
   }
 
   // Round the after numbers by the after digit
-  if (roundAfterBy) {
+  if (roundAfterInterval) {
     sizesAfterBase = sizesAfterBase.map(
-      (n) => Math.round(n / roundAfterBy) * roundAfterBy
+      (n) => Math.round(n / roundAfterInterval) * roundAfterInterval
     )
   }
 
@@ -50,7 +79,7 @@ const createTypeScale: (options: TypeScaleOptions) => number[] = (options) => {
    * Filter numbers outside the min and max sizes
    * Filter only unique numbers
    */
-  return [...sizesBeforeBase, base, ...sizesAfterBase].filter(
+  return [...sizesBeforeBase, baseSize, ...sizesAfterBase].filter(
     (num, index, array) => {
       return (
         minSize &&
