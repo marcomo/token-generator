@@ -9,13 +9,7 @@ import {
   Tag,
 } from '@chakra-ui/react'
 import { FunctionComponent } from 'react'
-
-type Option = {
-  value: string
-  label: string
-  selected: boolean
-  data?: Record<string, string>
-}
+import { Option } from '../types/Option'
 
 type Props = {
   options: Option[]
