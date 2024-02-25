@@ -1,5 +1,7 @@
-import { Box, Card, Flex, HStack, Heading, Text } from '@chakra-ui/react'
+import { Box, Card, Flex, HStack, Text } from '@chakra-ui/react'
 import Font from './Font'
+import TypescaleConfig from './TypescaleConfig'
+import Heading from '../Heading'
 
 const Typescale: React.FunctionComponent = () => {
   return (
@@ -11,6 +13,7 @@ const Typescale: React.FunctionComponent = () => {
         </Box>
         <HStack gap={16} align={'flex-start'}>
           <Font />
+          <TypescaleConfig />
         </HStack>
       </Flex>
     </Card>
