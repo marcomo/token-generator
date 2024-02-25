@@ -15,14 +15,20 @@
     "demo": "yarn sdbuild && node dist/demo/test.js",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint index.tsx src/**"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "classnames": "^2.3.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.33.2",
     "style-dictionary": "^3.9.0",
     "tinycolor2": "^1.6.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
