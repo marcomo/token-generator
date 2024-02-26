@@ -1,4 +1,4 @@
-import { TypeScaleOptions } from 'src/types/Typescale'
+import { TypeScaleOptions } from '../types/Typescale'
 
 const defaults: TypeScaleOptions = {
   baseSize: 16,
