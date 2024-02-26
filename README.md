@@ -4,7 +4,7 @@ A tool for experimenting with color and typographic tokens and generating output
 
 ## How it works
 
-This tool uses [Style Dictionary](https://amzn.github.io/style-dictionary/#/) to generate tokens in target formats from an token files. This is similar to the [Style dictionary Playground](https://www.style-dictionary-play.dev/) but with the addition of an interface to generate the base tokens.
+This tool uses [Style Dictionary](https://amzn.github.io/style-dictionary/#/) to generate tokens in target formats from token files. This is similar to the [Style dictionary Playground](https://www.style-dictionary-play.dev/) but with the addition of an interface to generate the base tokens.
 
 ## Tokens
 
@@ -16,7 +16,7 @@ Each category of tokens uses helper functions to generate the tokens file from a
 
 - `createTypeScale(options)` - Generates an array of font sizes from a set of options
 - `createTypeScaleTokens(typeScale)` - Generates the typescale tokens input for use by Style Dictionary
-- `createColorProgressionTokens(options)` - Generates the color tokens input for use by Style
+- `createColorProgressionTokens(options)` - Generates the color tokens input for use by Style Dictionary
 
 ## TypeScale
 
@@ -39,18 +39,140 @@ interface TypeScaleOptions = {
 
 #### Options
 
-- `baseSize` - The font size used as the base for the typescale calculations.
-  - default: `16`
-- `factor` - The amount to scale each level within the typescale.
-  - default: `1.125`
-- `minSize` (optional) - The smallest allowable font size in the typescale.
-  - default: `12`
-- `maxSize` (optional) - The largest allowable font size in the typescale.
-  - default: `96`
-- `roundBeforeInterval` (optional) - The interval between sizes below the base size.
-  - default: `4`
-- `roundAfterInterval` (optional) - The interval between sizes above the base size.
-  - default: `4`
+##### `baseSize` (required)
+
+The font size used as the base for the typescale calculations.
+
+###### Default
+
+`16`
+
+###### Additional details
+
+The `baseSize` is not necessarily the first size in the progression. You can have a `minSize` lower than the `baseSize` which will result in typescale sizes lower than the `baseSize`.
+
+The `baseSize` will always be within the typescale.
+
+##### `factor` (required)
+
+The amount to scale each level within the typescale.
+
+###### Default
+
+`1.125`
+
+###### Additional details
+
+The `factor` is use to calculate the next font size in the typescale.
+
+```
+  nextFontSize = previousFontSize * factor
+```
+
+##### `minSize`
+
+The smallest allowable font size in the typescale.
+
+###### Default
+
+`12`
+
+###### Additional details
+
+The `minSize` is not guaranteed to be in the final typescale. The `factor` and `roundBeforeInterval` may cause it to not be included.
+
+```
+// This config will not include the minSize in the typescale
+{
+  baseSize: 20,
+  factor: 1.25,
+  minSize: 12,
+  maxSize: 72,
+  roundBeforeInterval: 8,
+  roundAfterInterval: 8
+}
+
+// results in typescale
+[16, 20, 24, 32, 40, 48, 64]
+```
+
+##### `maxSize`
+
+The largest allowable font size in the typescale.
+
+###### Default
+
+`96`
+
+###### Additional details
+
+The `maxSize` is not guaranteed to be in the final typescale. The `factor` and `roundAfterInterval` may cause it to not be included.
+
+In the example above for `minSize`, the `maxSize` is not included in final typescale.
+
+##### `roundBeforeInterval`
+
+The interval between sizes below the base size.
+
+###### Default
+
+`4`
+
+###### IAdditional detailsfo
+
+When the `factor` is applied, it will likely generate a float. For example,
+
+```
+// This config
+{
+  baseSize: 16,
+  factor: 1.25,
+  minSize: 12,
+  maxSize: 72,
+  roundBeforeInterval: 4,
+  roundAfterInterval: 8
+}
+
+  // returns this typescale without rounding
+  [
+    // 4 values prior
+    11.24, 12.64, 14.22,
+    // baseSize
+    16,
+    // 13 values prior
+    18, 20.25, 22.78, 25.63,
+    28.83, 32.43, 36.48, 41.04,
+    46.17, 51.94, 58.43, 65.73,
+    73.95
+  ]
+```
+
+Rounding is applied to give us whole integer font sizes. `roundBeforeInterval` controls the rounding of numbers prior to the `baseSize`. After rounding, the final typescale is shorter:
+
+```
+[
+  // 1 value prior
+  12,
+  // baseSize
+  16,
+  // 7 values after
+  24, 32, 40, 48, 56, 64, 72
+]
+```
+
+##### `roundAfterInterval`
+
+The interval between sizes above the base size.
+
+###### Default
+
+`4`
+
+###### Additional details
+
+`roundBeforeInterval` controls the rounding of numbers prior to the `baseSize`.
+
+See the example above in `roundBeforeInterval` to see how rounding is applied.
 
 #### Returns
 
@@ -103,7 +225,7 @@ This function uses the [`tinycolor2`](https://github.com/bgrins/TinyColor) packa
 
 #### Parameter
 
-A `TypeScaleOptions` object
+A `BaseColorsOptions` object
 
 ```
 type ColorAdjustment =
@@ -129,98 +251,186 @@ type BaseColorsOptions = {
 
 #### Options
 
-##### `baseColor`
+##### `baseColor` (required)
 
 The color used as the base for the color progression.
 
-default: `#818181`
+Accepted colors: hex, 8-digit hex, rgb(a), hsl(a), hsv(a), or named color. rgb(a), hsl(a), hsv(a) accept object input.
 
-##### `baseColorIndex`
+##### `baseColorIndex` (required)
 
 The position of the baseColor in the final progresson.
 
-default: `3`
-
-##### `levelsCount`
+##### `levelsCount` (required)
 
 The number of colors in the progression.
 
-default: `7`
+##### `baseColorKey`
 
-##### `baseColorKey` (optional)
+A key to use for the base color in place of the key generated from the level. For example,
 
-The key of the base color from which all other color keys are calcuated.
+```
+export const color = {
+  neutral: createColorProgressionTokens({
+    baseColor: '#4b5055',
+    baseColorIndex: 6,
+    baseColorKey: 'dark',
+    levelsCount: 7,
+    lightdark: [64, 56, 48, 24, 16, 8, 0],
+  }),
+}
 
-default: `'100'`
+// returns
+{
+  color: {
+    neutral: {
+      '100': { value: '#f2f3f4' },
+      '200': { value: '#dddfe1' },
+      '300': { value: '#c7cace' },
+      '400': { value: '#868d94' },
+      '500': { value: '#717980' },
+      '600': { value: '#5e646b' },
+      'dark': { value: '#4b5055' }
+    }
+  }
+}
+```
 
-##### `startLevel` (optional)
+##### `startLevel`
 
 The color level at which the progression starts.
 
-default: `100`
+###### Default
 
-##### `levelGap` (optional)
+`100`
+
+##### `levelGap`
 
 The numeric gap between color levels in the progression.
 
-default: `100`
+###### Default
 
-##### `lightdark` (optional)
+`100`
+
+###### Additional details
+
+```
+export const color = {
+  neutral: createColorProgressionTokens({
+    baseColor: '#4b5055',
+    baseColorIndex: 6,
+    levelGap: 10,
+    startLevel: 10,
+    levelsCount: 7,
+    lightdark: [64, 56, 48, 24, 16, 8, 0],
+  }),
+}
+
+// returns
+{
+  color: {
+    neutral: {
+      '10': { value: '#f2f3f4' },
+      '20': { value: '#dddfe1' },
+      '30': { value: '#c7cace' },
+      '40': { value: '#868d94' },
+      '50': { value: '#717980' },
+      '60': { value: '#5e646b' },
+      '70': { value: '#4b5055' }
+    }
+  }
+}
+```
+
+##### `lightdark`
 
 The light/dark color adjustment to apply between levels. Can be a number from 0 to 100.
 
-default: `0` (no adjustment)
+###### Default
 
-Lighten and darken transformations are mutually exclusive. Otherwise they would cancel each other out. Lightening is only applied when index is less than the baseColorIndex. Darkening is only applied when index is greater than the baseColorIndex. The base color never gets transformed.
+`0` (no adjustment)
+
+###### Additional details
+
+Lighten and darken transformations are mutually exclusive. Otherwise they would cancel each other out. Lightening is only applied when the color's index is less than the `baseColorIndex`. Darkening is only applied when the color's index is greater than the `baseColorIndex`. The base color never gets transformed.
 
 A number >= 100 will produce white for lightening and black for darkening.
 
-Accepts:
+###### Acceptable argument types
 
-- `number` - The adjustment is applied evenly throughout the progression.
-- `number[]` - The number sharing the same index as the color level is used as the adjustment.
-- `(levels, index, options) => number` - A function that returns a number. Function includes parameters
-  - levels: `number[]` - The calculated level number, eg. `[100, 200, 300]`
-  - index: `number` - The index of the level being adjusted.
-  - options: `BaseColorOptions` - The options object passed to `createColorProgressionTokens`
+`number`
 
-##### `saturate` (optional)
+The adjustment is applied evenly throughout the progression.
+
+`number[]`
+
+The number sharing the same index as the color level is used as the adjustment.
+
+`(levels, index, options) => number`
+
+A function that returns a number. Function includes parameters
+
+- levels: `number[]` - The calculated level number, eg. `[100, 200, 300]`
+- index: `number` - The index of the level being adjusted.
+- options: `BaseColorOptions` - The options object passed to `createColorProgressionTokens`
+
+##### `saturate`
 
 The saturation color adjustment to be applied between levels. Can be a number from 0 to 100.
 
-default: `0` (no saturation)
+###### Default
+
+`0` (no saturation)
+
+###### Additional details
 
 A number >= 100 will produce a fully saturated color.
 
-##### `desaturate` (optional) -
+##### `desaturate`
 
 The desaturation color adjustment to be applied between levels. Can be a number from 0 to 100.
 
-default: `0` (no desaturation)
+###### Default
+
+`0` (no desaturation)
+
+###### Additional details
 
 A number >= 100 will produce a fully desaturated greyscale color.
 
-##### `spin` (optional)
+##### `spin`
 
 The hue adjustment to be applied between levels. Can be a number from -360 to 360.
 
-default: `0` (no hue adjustment)
+###### Default
+
+`0` (no hue adjustment)
+
+###### Additional details
 
 The numbers 0, -360, and 360 will result in no hue adjustment being applied to the color level.
 
-##### `greyscale`: (optional)
+##### `greyscale`
 
 A boolean that, when set as `true`, will make all colors on the progression greyscale.
 
-default: `false`
+###### Default
+
+`false`
+
+###### Additional details
 
 When `true`, greyscale-ing is applied after all other color adjustments and will replace the `desaturate` option.
 
-##### `tokens` (optional)
+##### `tokens`
 
 Any manually created tokens to be added to the returned tokens object.
 
-default: `{}`
+###### Default
+
+`{}`
+
+###### Additional details
 
 Any token provided with a matching key will replace any generated by `createColorProgressionTokens`.
 

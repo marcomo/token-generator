@@ -19,6 +19,7 @@ export type ColorAdjustment =
   | number[]
   | ((levels: number[], index: number, options: BaseColorsOptions) => number)
 
+export type RequiredOptions = 'baseColor' | 'baseColorIndex' | 'levelsCount'
 export type BaseColorsOptions = {
   baseColor: string
   baseColorIndex: number
