@@ -1,5 +1,5 @@
 import { createColorProgressionTokens } from '../../utils/createColorProgressionTokens'
-import { TokenDictionary } from 'src/types/TokenGenerator'
+import { TokenDictionary } from '../../types/TokenGenerator'
 
 export const color: TokenDictionary<TokenDictionary<TokenDictionary>> = {
   spectral: {

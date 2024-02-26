@@ -2,13 +2,12 @@ import {
   BaseColorsOptions,
   ColorAdjustment,
   GetColorsOptions,
+  RequiredOptions,
 } from '../types/Color'
 import { TokenDictionary } from '../types/TokenGenerator'
 import Color from 'tinycolor2'
 
-const baseColorsDefaults: Required<BaseColorsOptions> = {
-  baseColor: '#818181',
-  baseColorIndex: 3,
+const baseColorsDefaults: Required<Omit<BaseColorsOptions, RequiredOptions>> = {
   baseColorKey: '100',
   startLevel: 100,
   lightdark: 0,
@@ -16,7 +15,6 @@ const baseColorsDefaults: Required<BaseColorsOptions> = {
   spin: 0,
   desaturate: 0,
   greyscale: false,
-  levelsCount: 7,
   levelGap: 100,
   tokens: {},
 }
@@ -79,7 +77,7 @@ const generateColors: (options: GetColorsOptions) => TokenDictionary = (
       const isBaseColor = i === baseColorIndex
       const color = Color(baseColor)
 
-      // Use the basColorKey insteado of the level if
+      // Use the baseColorKey instead of the level if current index is baseColorIndex
       const key = isBaseColor ? baseColorKey || level : level
 
       // The base color receives no color transformations
