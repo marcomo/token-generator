@@ -2,6 +2,8 @@
 
 A tool for experimenting with color and typographic tokens and generating output for use in coded implementations.
 
+> :construction: This is a work-in-progress project. See the [Todos](#donetodo) list for what's done and what's to come.
+
 ## How it works
 
 This tool uses [Style Dictionary](https://amzn.github.io/style-dictionary/#/) to generate tokens in target formats from token files. This is similar to the [Style dictionary Playground](https://www.style-dictionary-play.dev/) but with the addition of an interface to generate the base tokens.
